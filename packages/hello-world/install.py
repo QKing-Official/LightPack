@@ -1,6 +1,5 @@
-import subprocess
-import sys
 import os
+import sys
 
 def install():
     print("Installing Hello World package...")
@@ -14,18 +13,14 @@ def install():
         return
     
     try:
-        # Use subprocess.Popen() to run the script without the check=True argument
-        process = subprocess.Popen([sys.executable, script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Capture the output and errors
-        stdout, stderr = process.communicate()
+        # Use os.system() to run the Python script
+        result = os.system(f"{sys.executable} {script_path}")
 
-        # Check the return code to determine success
-        if process.returncode == 0:
+        # Check the result of the command
+        if result == 0:
             print("Hello World package installed successfully!")
-            print(stdout.decode())  # Display output from the script
         else:
-            print(f"Error running the script: {stderr.decode()}")
+            print(f"Error running the script. Exit code: {result}")
     except Exception as e:
         print(f"Error running hello_world.py: {e}")
 
