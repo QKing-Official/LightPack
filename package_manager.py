@@ -1,38 +1,61 @@
 import subprocess
-import os
 import sys
+import os
+import urllib.request
 
-LIGHTPACK_REPO = "https://github.com/QKing-Official/LightPack.git"
+# Location where packages will be stored
 INSTALL_DIR = os.path.expanduser("~")  # Default install location will be the user's home directory
 
-def clone_repo(package_name):
-    """ Clone a specific package from GitHub into the install directory """
-    print(f"Cloning {package_name} package...")
-    
-    # Create package directory under INSTALL_DIR
-    package_dir = os.path.join(INSTALL_DIR, package_name)
-    if not os.path.exists(package_dir):
-        os.makedirs(package_dir)
+def download_package(package_name):
+    """ Download the Python file for the package from GitHub """
+    print(f"Downloading {package_name}.py...")
 
-    # Clone only the specific package repository
+    # Package URL on GitHub (we assume the packages are individual .py files in the repo)
+    url = f"https://raw.githubusercontent.com/QKing-Official/LightPack/main/packages/{package_name}/{package_name}.py"
+    package_path = os.path.join(INSTALL_DIR, f"{package_name}.py")
+
     try:
-        subprocess.run(["git", "clone", f"https://github.com/QKing-Official/{package_name}.git", package_dir], check=True)
-        print(f"Package {package_name} cloned successfully!")
-    except subprocess.CalledProcessError as e:
-        print(f"Error cloning package: {e}")
+        # Download the package file
+        urllib.request.urlretrieve(url, package_path)
+        print(f"{package_name}.py downloaded successfully!")
+    except Exception as e:
+        print(f"Error downloading package: {e}")
+        return False
+
+    return package_path
 
 def install_package(package_name):
-    """ Install a specific package """
-    package_dir = os.path.join(INSTALL_DIR, package_name)
-    install_script = os.path.join(package_dir, "install.py")
-
-    if not os.path.exists(install_script):
-        print(f"Package {package_name} does not have an install.py script.")
+    """ Install the package by downloading and running the Python file """
+    package_path = download_package(package_name)
+    if not package_path:
         return
-
-    # Run the install script for the package
+    
     try:
-        subprocess.run([sys.executable, install_script], check=True)
+        # Run the downloaded Python file
+        print(f"Running {package_name} package...")
+        subprocess.run([sys.executable, package_path], check=True)
         print(f"{package_name} installed successfully!")
     except subprocess.CalledProcessError as e:
-        print(f"Error installing {package_name}: {e}")
+        print(f"Error running {package_name}: {e}")
+
+def interactive_shell():
+    """ Start an interactive shell for the package manager """
+    while True:
+        command = input("lightpack-shell> ").strip()
+
+        if command == "exit":
+            break
+        elif command.startswith("install "):
+            package_name = command.split()[1]
+            install_package(package_name)
+        else:
+            print("Unknown command")
+
+def main():
+    """ Entry point for the package manager shell """
+    print("Welcome to the LightPack package manager shell!")
+    print("Type 'exit' to quit.")
+    interactive_shell()
+
+if __name__ == "__main__":
+    main()
