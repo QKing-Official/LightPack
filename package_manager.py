@@ -6,37 +6,53 @@ import urllib.request
 # Location where packages will be stored
 INSTALL_DIR = os.path.expanduser("~")  # Default install location will be the user's home directory
 
-def download_package(package_name):
-    """ Download the Python file for the package from GitHub """
-    print(f"Downloading {package_name}.py...")
+def download_file(url, file_path):
+    """ Download a file from a URL """
+    try:
+        urllib.request.urlretrieve(url, file_path)
+        print(f"Downloaded {file_path}")
+    except Exception as e:
+        print(f"Error downloading file: {e}")
+        return False
+    return True
 
-    # Package URL on GitHub (we assume the packages are individual .py files in the repo)
+def clone_main_file(package_name):
+    """ Clone the main Python file for the package """
+    print(f"Cloning {package_name}.py...")
+
+    # URL to the main Python file in the GitHub repository
     url = f"https://raw.githubusercontent.com/QKing-Official/LightPack/main/packages/{package_name}/{package_name}.py"
     package_path = os.path.join(INSTALL_DIR, f"{package_name}.py")
 
-    try:
-        # Download the package file
-        urllib.request.urlretrieve(url, package_path)
-        print(f"{package_name}.py downloaded successfully!")
-    except Exception as e:
-        print(f"Error downloading package: {e}")
-        return False
+    return download_file(url, package_path)
 
-    return package_path
+def clone_installer(package_name):
+    """ Clone the install.py script for the package """
+    print(f"Cloning {package_name}/install.py...")
+
+    # URL to the installer script in the GitHub repository
+    url = f"https://raw.githubusercontent.com/QKing-Official/LightPack/main/packages/{package_name}/install.py"
+    installer_path = os.path.join(INSTALL_DIR, f"{package_name}_install.py")
+
+    return download_file(url, installer_path)
 
 def install_package(package_name):
-    """ Install the package by downloading and running the Python file """
-    package_path = download_package(package_name)
-    if not package_path:
+    """ Install the package by downloading and running the install script """
+    # Clone the main package file
+    if not clone_main_file(package_name):
         return
-    
+
+    # Clone the installer script
+    if not clone_installer(package_name):
+        return
+
+    # Run the installer script
     try:
-        # Run the downloaded Python file
-        print(f"Running {package_name} package...")
-        subprocess.run([sys.executable, package_path], check=True)
+        print(f"Running installer for {package_name}...")
+        subprocess.run([sys.executable, f"{package_name}_install.py"], check=True)
         print(f"{package_name} installed successfully!")
     except subprocess.CalledProcessError as e:
-        print(f"Error running {package_name}: {e}")
+        print(f"Error running installer for {package_name}: {e}")
 
 def interactive_shell():
     """ Start an interactive shell for the package manager """
