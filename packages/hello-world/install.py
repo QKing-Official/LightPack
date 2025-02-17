@@ -4,9 +4,12 @@ import sys
 def install():
     print("Installing Hello World package...")
 
-    # Ensure we're in the correct directory where hello_world.py was downloaded
-    script_path = os.path.join(os.getcwd(), "hello_world.py")
-    
+    # Set the directory where the package was downloaded
+    package_dir = os.getcwd()  # Current working directory (where the package manager is running)
+
+    # Set the path for the hello_world.py file in the current directory
+    script_path = os.path.join(package_dir, "hello-world.py")
+
     # Verify if the file exists
     if not os.path.exists(script_path):
         print(f"Error: {script_path} does not exist.")
