@@ -14,11 +14,12 @@ def install():
         return
     
     try:
-        # Run the hello_world.py script using subprocess
+        # Run the hello_world.py script using subprocess.run() to capture output and errors
         result = subprocess.run([sys.executable, script_path], capture_output=True, text=True)
         
         # Check if the script ran successfully
         if result.returncode == 0:
+            print("Hello World package installed successfully!")
             print(result.stdout)  # Print any output from the script
         else:
             print(f"Error running the script: {result.stderr}")
