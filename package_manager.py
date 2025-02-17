@@ -3,8 +3,8 @@ import sys
 import os
 import urllib.request
 
-# Location where packages will be stored
-INSTALL_DIR = os.path.expanduser("~")  # Default install location will be the user's home directory
+# Location where packages will be stored (current directory where the script is being executed)
+INSTALL_DIR = os.getcwd()  # This ensures the packages are stored in the same directory as package_manager.py
 
 def download_file(url, file_path):
     """ Download a file from a URL """
