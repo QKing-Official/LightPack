@@ -14,7 +14,7 @@ def install():
         return
     
     try:
-        # Run the hello_world.py script using subprocess.run()
+        # Run the hello_world.py script using subprocess.run() without 'check'
         result = subprocess.run([sys.executable, script_path], capture_output=True, text=True)
 
         # Check the return code to determine success
