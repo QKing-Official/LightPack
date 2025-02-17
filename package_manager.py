@@ -22,7 +22,7 @@ def clone_main_file(package_name):
 
     # URL to the main Python file in the GitHub repository
     url = f"https://raw.githubusercontent.com/QKing-Official/LightPack/main/packages/{package_name}/{package_name}.py"
-    package_path = os.path.join(INSTALL_DIR, f"{package_name}.py")
+    package_path = os.path.join(INSTALL_DIR, f"{package_name}_main.py")  # Save with "_main.py" suffix
 
     return download_file(url, package_path)
 
@@ -38,9 +38,12 @@ def clone_installer(package_name):
 
 def install_package(package_name):
     """ Install the package by downloading and running the install script """
-    # Clone the main package file
+    # Clone the main package file and rename it to match what the installer expects
     if not clone_main_file(package_name):
         return
+
+    # Rename the main package file to the expected name (e.g., hello_world.py)
+    os.rename(f"{package_name}_main.py", f"{package_name}_world.py")
 
     # Clone the installer script
     if not clone_installer(package_name):
