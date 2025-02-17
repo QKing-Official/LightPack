@@ -5,22 +5,22 @@ import os
 def install():
     print("Installing Hello World package...")
 
-    # Make sure we are in the correct directory where the hello_world.py script was downloaded
+    # Ensure we're in the correct directory where hello_world.py was downloaded
     script_path = os.path.join(os.getcwd(), "hello_world.py")
     
-    # Check if the file exists before running it
+    # Verify if the file exists
     if not os.path.exists(script_path):
         print(f"Error: {script_path} does not exist.")
         return
     
     try:
-        # Run the hello_world.py script using subprocess.run() to capture output and errors
+        # Run the hello_world.py script using subprocess.run()
         result = subprocess.run([sys.executable, script_path], capture_output=True, text=True)
-        
-        # Check if the script ran successfully
+
+        # Check the return code to determine success
         if result.returncode == 0:
             print("Hello World package installed successfully!")
-            print(result.stdout)  # Print any output from the script
+            print(result.stdout)  # Display output from the script
         else:
             print(f"Error running the script: {result.stderr}")
     except Exception as e:
