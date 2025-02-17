@@ -1,19 +1,19 @@
-import platform
+# install.py for hello-world package
 
-def main():
-    # Print "Hello, World!"
-    print("Hello, World!")
+import subprocess
+import sys
 
-    # Detect OS and print the OS name
-    os_name = platform.system()
-    if os_name == "Windows":
-        print("Running on Windows")
-    elif os_name == "Linux":
-        print("Running on Linux")
-    elif os_name == "Darwin":  # macOS
-        print("Running on macOS")
-    else:
-        print(f"Running on unknown OS: {os_name}")
+def install():
+    print("Installing the Hello World package...")
+
+    # Example: Install any necessary dependencies (if needed)
+    # subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
+
+    # For now, we'll simply print "Hello, World!"
+    try:
+        subprocess.check_call([sys.executable, "hello_world.py"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running hello_world.py: {e}")
 
 if __name__ == "__main__":
-    main()
+    install()
