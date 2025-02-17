@@ -28,22 +28,19 @@ def clone_repo():
         print(f"LightPack already cloned at {INSTALL_DIR}.")
 
 def install_package(package_name):
-    """ Install a package from the LightPack repo """
-    package_dir = INSTALL_DIR / package_name
+    """ Install a Python package from the LightPack repo """
+    package_dir = INSTALL_DIR / "packages" / package_name
     if not package_dir.exists():
         print(f"Package {package_name} not found.")
         return
 
-    # Install package (assuming it's a directory with scripts to install)
+    # Install package (just run the python script for now)
     print(f"Installing {package_name}...")
-    install_script = package_dir / "install.sh"  # or any install file for the package
-    if install_script.exists():
-        subprocess.run(["bash", str(install_script)], check=True)
+    script_file = package_dir / f"{package_name}.py"
+    if script_file.exists():
+        subprocess.run(["python", str(script_file)], check=True)
     else:
-        print(f"No install script found for {package_name}.")
-
-    # Add executables to PATH
-    add_to_path(package_dir)
+        print(f"No script found for {package_name}.")
 
 def remove_package(package_name):
     """ Remove a package """
