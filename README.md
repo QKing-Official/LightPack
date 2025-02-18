@@ -6,7 +6,7 @@ LightPack Package Manager
 
 LightPack is a lightweight package manager that allows you to easily download, install, and run custom Python packages from a remote repository.
 
-##Features
+## Features
 
 Install packages with a simple command.
 
@@ -16,19 +16,26 @@ Automatically fetch required dependencies.
 
 Easy-to-use interactive shell.
 
-##Installation
+## Installation
 
 Clone the Repository
 
 To use LightPack, clone the repository:
 
-$ curl -O https://raw.githubusercontent.com/QKing-Official/LightPack/main/package\_manager.py
+```bash
+curl -O https://raw.githubusercontent.com/QKing-Official/LightPack/main/package\_manager.py
+```
 
-(git clone https://github.com/QKing-Official/LightPack.git for whole repo including all packages)
+For the whole repo (with all packages):
+```bash
+git clone https://github.com/QKing-Official/LightPack.git
+```
 
-$ cd LightPack
+```bash
+cd LightPack
+```
 
-Run the Package Manager
+## Run the Package Manager
 
 Start the interactive shell by running:
 
@@ -36,7 +43,7 @@ Start the interactive shell by running:
 python packag_manager.py
 ```
 
-Usage
+## Usage
 
 Once inside the LightPack shell, you can use the following commands:
 
@@ -76,7 +83,7 @@ To exit LightPack, use:
 lightpack-shell> exit
 ```
 
-##Some available Packages (there are way more)
+## Some available Packages (there are way more)
 
 Here are some (useful) packages available for installation:
 
@@ -86,7 +93,7 @@ network-info - Gives information about your network.
 
 sys-info - Gives information about your system.
 
-Creating Your Own Packages
+## Creating Your Own Packages
 
 You can create your own packages and host them in the repository.
 
@@ -119,17 +126,17 @@ Here is the format for making a package.
 
 ```python
 
-#my\_package.py
+#my_package.py
 
-def main\_functionality():
+def main_functionality():
 
 """Implement the core functionality of your package."""
 
 print("This is where the main functionality goes.")
 
-if \_\_name\_\_ == "\_\_main\_\_":
+if __name__ == "__main__":
 
-main\_functionality()
+main_functionality()
 
 ```
 
@@ -149,31 +156,31 @@ def install():
 
 print("Installing My Package...")
 
-\# Ensure the package directory exists
+# Ensure the package directory exists
 
-package\_dir = os.getcwd() # Current directory
+package_dir = os.getcwd() # Current directory
 
-script\_path = os.path.join(package\_dir, "my\_package.py")
+script_path = os.path.join(package_dir, "my_package.py")
 
-if not os.path.exists(script\_path):
+if not os.path.exists(script_path):
 
-print(f"Error: {script\_path} does not exist.")
+print(f"Error: {script_path} does not exist.")
 
 return
 
-\# List of dependencies to install
+# List of dependencies to install
 
-dependencies = \["requests", "numpy", "pandas"\] # Example dependencies
+dependencies = ["requests", "numpy", "pandas"] # Example dependencies
 
 try:
 
-\# Install dependencies
+# Install dependencies
 
 for dependency in dependencies:
 
 print(f"Installing {dependency}...")
 
-subprocess.run(\[sys.executable, "-m", "pip", "install", dependency\], check=True)
+subprocess.run([sys.executable, "-m", "pip", "install", dependency], check=True)
 
 print(f"{dependency} installed successfully.")
 
@@ -183,7 +190,7 @@ except Exception as e:
 
 print(f"Error during installation: {e}")
 
-if \_\_name\_\_ == "\_\_main\_\_":
+if __name__ == "__main__":
 
 install()
 
