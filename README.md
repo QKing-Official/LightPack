@@ -23,7 +23,7 @@ Clone the Repository
 To use LightPack, clone the repository:
 
 ```bash
-curl -O https://raw.githubusercontent.com/QKing-Official/LightPack/main/package\_manager.py
+curl -O https://raw.githubusercontent.com/QKing-Official/LightPack/main/package_manager.py
 ```
 
 For the whole repo (with all packages):
