@@ -1,5 +1,7 @@
-# LightPack
+\# LightPack
+
 A lightweight opensource package manager and shell
+
 LightPack Package Manager
 
 LightPack is a lightweight package manager that allows you to easily download, install, and run custom Python packages from a remote repository.
@@ -20,15 +22,17 @@ Clone the Repository
 
 To use LightPack, clone the repository:
 
-$ curl -O https://raw.githubusercontent.com/QKing-Official/LightPack/main/package_manager.py
+$ curl -O https://raw.githubusercontent.com/QKing-Official/LightPack/main/package\_manager.py
+
 (git clone https://github.com/QKing-Official/LightPack.git for whole repo including all packages)
+
 $ cd LightPack
 
 Run the Package Manager
 
 Start the interactive shell by running:
 
-$ python package_manager.py
+$ python package\_manager.py
 
 Usage
 
@@ -38,7 +42,7 @@ Install a Package
 
 To install a package, use:
 
-lightpack-shell> install <package_name>
+lightpack-shell> install
 
 Example:
 
@@ -48,7 +52,7 @@ Run an Installed Package
 
 To run an installed package, use:
 
-lightpack-shell> run <package_name>
+lightpack-shell> run
 
 Example:
 
@@ -78,18 +82,23 @@ Package Structure
 
 Each package should have:
 
-A main script: <package_name>.py
+A main script: .py
 
 (Optional) An installer script: install.py
 
 Example structure:
 
-````
+\`\`\`\`
+
 /packages/
-    /hello-world/
-        hello-world.py
-        install.py (optional)
-```
+
+/hello-world/
+
+hello-world.py
+
+install.py (optional)
+
+\`\`\`
 
 Adding Your Package to LightPack (alternative databases for packages comming soon!)
 
@@ -97,52 +106,77 @@ Add your package to the packages/ directory.
 
 Here is the format for making a package.
 
-```
-#my_package.py
-def main_functionality():
-    """Implement the core functionality of your package."""
-    print("This is where the main functionality goes.")
+\`\`\`
 
-if __name__ == "__main__":
-    main_functionality()
-```
+#my\_package.py
 
-```
+def main\_functionality():
+
+"""Implement the core functionality of your package."""
+
+print("This is where the main functionality goes.")
+
+if \_\_name\_\_ == "\_\_main\_\_":
+
+main\_functionality()
+
+\`\`\`
+
+\`\`\`
+
 #install.py
+
 import os
+
 import sys
+
 import subprocess
 
 def install():
-    print("Installing My Package...")
 
-    # Ensure the package directory exists
-    package_dir = os.getcwd()  # Current directory
-    script_path = os.path.join(package_dir, "my_package.py")
+print("Installing My Package...")
 
-    if not os.path.exists(script_path):
-        print(f"Error: {script_path} does not exist.")
-        return
+\# Ensure the package directory exists
 
-    # List of dependencies to install
-    dependencies = ["requests", "numpy", "pandas"]  # Example dependencies
+package\_dir = os.getcwd() # Current directory
 
-    try:
-        # Install dependencies
-        for dependency in dependencies:
-            print(f"Installing {dependency}...")
-            subprocess.run([sys.executable, "-m", "pip", "install", dependency], check=True)
-            print(f"{dependency} installed successfully.")
+script\_path = os.path.join(package\_dir, "my\_package.py")
 
-        print("My Package installed successfully!")
-    except Exception as e:
-        print(f"Error during installation: {e}")
+if not os.path.exists(script\_path):
 
-if __name__ == "__main__":
-    install()
-```
+print(f"Error: {script\_path} does not exist.")
 
-Users can now install your package using install <package_name>.
+return
+
+\# List of dependencies to install
+
+dependencies = \["requests", "numpy", "pandas"\] # Example dependencies
+
+try:
+
+\# Install dependencies
+
+for dependency in dependencies:
+
+print(f"Installing {dependency}...")
+
+subprocess.run(\[sys.executable, "-m", "pip", "install", dependency\], check=True)
+
+print(f"{dependency} installed successfully.")
+
+print("My Package installed successfully!")
+
+except Exception as e:
+
+print(f"Error during installation: {e}")
+
+if \_\_name\_\_ == "\_\_main\_\_":
+
+install()
+
+\`\`\`
+
+Users can now install your package using install .
 
 Contributing
 
