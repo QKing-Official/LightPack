@@ -114,7 +114,7 @@ Example structure:
 
 hello-world.py
 
-install.py (optional)
+install.py
 
 ```
 
