@@ -107,7 +107,7 @@ A main script: .py
 
 Example structure:
 
-```mysql
+```cpp
 /packages/
 
 /hello-world/
