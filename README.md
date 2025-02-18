@@ -1,4 +1,4 @@
-\# LightPack
+# LightPack
 
 A lightweight opensource package manager and shell
 
@@ -6,7 +6,7 @@ LightPack Package Manager
 
 LightPack is a lightweight package manager that allows you to easily download, install, and run custom Python packages from a remote repository.
 
-Features
+##Features
 
 Install packages with a simple command.
 
@@ -16,7 +16,7 @@ Automatically fetch required dependencies.
 
 Easy-to-use interactive shell.
 
-Installation
+##Installation
 
 Clone the Repository
 
@@ -88,8 +88,7 @@ A main script: .py
 
 Example structure:
 
-\`\`\`\`
-
+```mysql
 /packages/
 
 /hello-world/
@@ -98,7 +97,7 @@ hello-world.py
 
 install.py (optional)
 
-\`\`\`
+```
 
 Adding Your Package to LightPack (alternative databases for packages comming soon!)
 
