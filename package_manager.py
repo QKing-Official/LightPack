@@ -41,15 +41,12 @@ def clone_installer(package_name):
 
 def install_package(package_name):
     """Install the package by downloading and running the install script"""
-    # Clone the main package file
     if not clone_main_file(package_name):
         return
 
-    # Clone the installer script
     if not clone_installer(package_name):
         return
 
-    # Run the installer script
     try:
         print(f"Running installer for {package_name}...")
         subprocess.run([sys.executable, f"{package_name}_install.py"], check=True)
@@ -67,6 +64,51 @@ def run_package(package_name):
     else:
         print(f"Error: {package_name} is not installed.")
 
+def list_packages():
+    """List all installed packages."""
+    print("\nInstalled packages:")
+    found = False
+    for file in os.listdir(INSTALL_DIR):
+        if file.endswith(".py") and not file.endswith("_install.py"):
+            print(f"- {file[:-3]}")  # Remove '.py' extension
+            found = True
+    if not found:
+        print("No packages installed.")
+
+def uninstall_package(package_name):
+    """Uninstall a package by deleting its files"""
+    main_file = os.path.join(INSTALL_DIR, f"{package_name}.py")
+    install_file = os.path.join(INSTALL_DIR, f"{package_name}_install.py")
+
+    if os.path.exists(main_file):
+        os.remove(main_file)
+        print(f"Removed {package_name}.py")
+    if os.path.exists(install_file):
+        os.remove(install_file)
+        print(f"Removed {package_name}_install.py")
+
+    if not os.path.exists(main_file) and not os.path.exists(install_file):
+        print(f"{package_name} uninstalled successfully.")
+    else:
+        print(f"Failed to uninstall {package_name}.")
+
+def update_package(package_name):
+    """Update a package by reinstalling it"""
+    print(f"Updating {package_name}...")
+    uninstall_package(package_name)
+    install_package(package_name)
+
+def display_help():
+    """Display available commands"""
+    print("\nAvailable commands:")
+    print("  install <package>   - Install a package")
+    print("  run <package>       - Run an installed package")
+    print("  list               - List installed packages")
+    print("  uninstall <package> - Remove an installed package")
+    print("  update <package>    - Update a package to the latest version")
+    print("  help               - Show this help message")
+    print("  exit               - Exit the package manager")
+
 def interactive_shell():
     """Start an interactive shell for the package manager"""
     while True:
@@ -80,14 +122,28 @@ def interactive_shell():
         elif command.startswith("run "):
             package_name = command.split()[1]
             run_package(package_name)
+        elif command == "list":
+            list_packages()
+        elif command.startswith("uninstall "):
+            package_name = command.split()[1]
+            uninstall_package(package_name)
+        elif command.startswith("update "):
+            package_name = command.split()[1]
+            update_package(package_name)
+        elif command == "help":
+            display_help()
         else:
-            print("Unknown command")
+            print("Unknown command. Type 'help' for a list of available commands.")
 
 def main():
     """Entry point for the package manager shell"""
     print("Welcome to the LightPack package manager shell!")
     print("Type 'install <package>' to install a package.")
     print("Type 'run <package>' to run an installed package.")
+    print("Type 'list' to view installed packages.")
+    print("Type 'uninstall <package>' to remove a package.")
+    print("Type 'update <package>' to update a package.")
+    print("Type 'help' for available commands.")
     print("Type 'exit' to quit.")
     interactive_shell()
 
