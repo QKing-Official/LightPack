@@ -84,16 +84,63 @@ A main script: <package_name>.py
 
 Example structure:
 
+````
 /packages/
     /hello-world/
         hello-world.py
         install.py (optional)
+```
 
-Adding Your Package to LightPack
+Adding Your Package to LightPack (alternative databases for packages comming soon!)
 
 Add your package to the packages/ directory.
 
-Push the changes to the repository.
+Here is the format for making a package.
+
+```
+#my_package.py
+def main_functionality():
+    """Implement the core functionality of your package."""
+    print("This is where the main functionality goes.")
+
+if __name__ == "__main__":
+    main_functionality()
+```
+
+```
+#install.py
+import os
+import sys
+import subprocess
+
+def install():
+    print("Installing My Package...")
+
+    # Ensure the package directory exists
+    package_dir = os.getcwd()  # Current directory
+    script_path = os.path.join(package_dir, "my_package.py")
+
+    if not os.path.exists(script_path):
+        print(f"Error: {script_path} does not exist.")
+        return
+
+    # List of dependencies to install
+    dependencies = ["requests", "numpy", "pandas"]  # Example dependencies
+
+    try:
+        # Install dependencies
+        for dependency in dependencies:
+            print(f"Installing {dependency}...")
+            subprocess.run([sys.executable, "-m", "pip", "install", dependency], check=True)
+            print(f"{dependency} installed successfully.")
+
+        print("My Package installed successfully!")
+    except Exception as e:
+        print(f"Error during installation: {e}")
+
+if __name__ == "__main__":
+    install()
+```
 
 Users can now install your package using install <package_name>.
 
