@@ -32,7 +32,9 @@ Run the Package Manager
 
 Start the interactive shell by running:
 
-$ python package\_manager.py
+```bash
+python packag_manager.py
+```
 
 Usage
 
@@ -42,31 +44,41 @@ Install a Package
 
 To install a package, use:
 
+```bash
 lightpack-shell> install
+```
 
 Example:
 
+```bash
 lightpack-shell> install hello-world
+```
 
 Run an Installed Package
 
 To run an installed package, use:
 
+```bash
 lightpack-shell> run
+```
 
 Example:
 
+```bash
 lightpack-shell> run hello-world
+```
 
 Exit the Shell
 
 To exit LightPack, use:
 
+```bash
 lightpack-shell> exit
+```
 
-Available Packages
+##Some available Packages (there are way more)
 
-Here are some useful packages available for installation:
+Here are some (useful) packages available for installation:
 
 hello-world – Prints "Hello, World!"
 
@@ -177,8 +189,7 @@ install()
 
 ```
 
-Users can now install your package using install .
+Users can now install your package using install. When community packages are added i will update you all with how to use it!
 
 Contributing
-
 Feel free to contribute new packages or improve existing ones. Fork the repo, make your changes, and submit a pull request.
