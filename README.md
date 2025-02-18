@@ -66,11 +66,9 @@ Here are some useful packages available for installation:
 
 hello-world – Prints "Hello, World!"
 
-weather – Fetches real-time weather data.
+network-info - Gives information about your network.
 
-calculator – A simple CLI calculator.
-
-todo – A basic to-do list manager.
+sys-info - Gives information about your system.
 
 Creating Your Own Packages
 
