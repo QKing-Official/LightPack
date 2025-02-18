@@ -105,7 +105,7 @@ Add your package to the packages/ directory.
 
 Here is the format for making a package.
 
-\`\`\`
+```python
 
 #my\_package.py
 
@@ -119,9 +119,11 @@ if \_\_name\_\_ == "\_\_main\_\_":
 
 main\_functionality()
 
-\`\`\`
+```
 
-\`\`\`
+
+
+```python
 
 #install.py
 
@@ -173,7 +175,7 @@ if \_\_name\_\_ == "\_\_main\_\_":
 
 install()
 
-\`\`\`
+```
 
 Users can now install your package using install .
 
