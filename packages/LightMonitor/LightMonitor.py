@@ -2,7 +2,6 @@ import psutil
 import shutil
 import os
 import time
-from datetime import timedelta
 import keyboard  # to detect keyboard events
 
 def get_cpu_usage():
@@ -71,7 +70,7 @@ def display_system_stats():
     for i, process in enumerate(top_processes):
         print(f"{i + 1}. PID: {process[0]} | Name: {process[1]} | CPU: {process[2]}% | Mem: {process[3]}%")
     
-    print("\nPress 'Ctrl+Q' to exit.")
+    print("\nPress any key to exit.")
 
 def run_lightmonitor():
     """Run the LightMonitor in an infinite loop."""
@@ -80,15 +79,15 @@ def run_lightmonitor():
             display_system_stats()
             time.sleep(2)  # Update every 2 seconds
 
-            # Check for Ctrl+Q (to quit the interactive shell)
-            if keyboard.is_pressed('ctrl+q'):
+            # Wait for any key press to quit the loop
+            if keyboard.is_pressed():
                 print("\nExiting LightMonitor...")
                 break  # Exit the loop and stop the program
 
     except KeyboardInterrupt:
         # If Ctrl+C is pressed, do nothing and continue
-        print("\nCaught Ctrl+C. Press 'Ctrl+Q' to quit LightMonitor.")
+        print("\nCaught Ctrl+C. Exiting LightMonitor.")
 
 if __name__ == "__main__":
-    print("Welcome to LightMonitor! Press 'Ctrl+Q' to quit.")
+    print("Welcome to LightMonitor! Press any key to quit.")
     run_lightmonitor()
