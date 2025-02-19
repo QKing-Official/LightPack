@@ -1,31 +1,22 @@
-import subprocess
-import sys
 import os
+import sys
+import subprocess
 
-def install_requirements():
-    """Install required packages via pip."""
-    required_packages = [
-        'psutil',  # Required for CPU, memory, and process information
-    ]
-
-    for package in required_packages:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-
-def install_lightmonitor():
-    """Install the LightMonitor package."""
-    print("Installing LightMonitor...")
-
-    # Ensure the script is in the correct directory
-    install_dir = os.path.dirname(os.path.realpath(__file__))
-
-    # Install dependencies
-    install_requirements()
-
-    print("LightMonitor installed successfully!")
+def install_dependencies():
+    """Install the necessary dependencies for LightMonitor."""
+    try:
+        # Installing the required dependencies
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "psutil", "keyboard"])
+        print("Dependencies installed successfully!")
+    except subprocess.CalledProcessError as e:
+        print(f"Error installing dependencies: {e}")
+        sys.exit(1)
 
 def main():
-    """Main installation process."""
-    install_lightmonitor()
+    """Main function for installation."""
+    print("Starting LightMonitor installation...")
+    install_dependencies()
+    print("Installation complete! You can now run 'LightMonitor.py'.")
 
 if __name__ == "__main__":
     main()
