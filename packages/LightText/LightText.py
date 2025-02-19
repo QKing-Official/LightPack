@@ -1,130 +1,131 @@
 import os
-import shutil
 
-INSTALL_DIR = os.getcwd()
+# Function to display the main menu
+def display_menu():
+    """Displays the main menu options."""
+    print("\n--- LightText Editor ---")
+    print("1. Edit File")
+    print("2. Make New File")
+    print("3. Rename File")
+    print("4. List Files")
+    print("5. Quit")
+    print("-" * 20)
 
-def install_lighttext():
-    """Install LightText editor by copying the script to the install directory."""
-    script_name = "lighttext.py"
-    destination_path = os.path.join(INSTALL_DIR, script_name)
+# Function to edit an existing file
+def edit_file():
+    """Allow user to edit an existing file."""
+    filename = input("\nEnter filename to edit: ")
 
-    # Check if file already exists
-    if os.path.exists(destination_path):
-        print(f"Error: {script_name} is already installed.")
+    # Check if file exists
+    if not os.path.exists(filename):
+        print(f"File '{filename}' does not exist!")
         return
 
-    # Create a simple LightText script
-    editor_script = '''import os
+    # Open the file for editing
+    with open(filename, "r+") as file:
+        content = file.readlines()
 
+        print("\n--- Editing file: ", filename)
+        print("-" * 40)
+
+        # Display the content of the file
+        for line in content:
+            print(line, end="")
+
+        print("\n--- End of file ---")
+        print("Type '..exit' (without quotes) to quit editing and return to the menu.")
+        
+        # Allow the user to modify the content
+        new_content = []
+        while True:
+            line = input()
+            if line == "..exit":
+                break
+            new_content.append(line + "\n")
+
+        # Ask user if they want to save changes
+        if new_content:
+            save = input(f"Do you want to save changes to {filename}? (y/n): ").lower()
+            if save == "y":
+                file.seek(0)
+                file.truncate()
+                file.writelines(new_content)
+                print(f"Changes saved to {filename}.")
+
+# Function to make a new file
+def make_file():
+    """Create a new file."""
+    filename = input("\nEnter new filename: ")
+
+    if os.path.exists(filename):
+        print(f"File '{filename}' already exists!")
+        return
+
+    # Create and open the new file for editing
+    with open(filename, "w") as file:
+        print(f"File '{filename}' created. You can start editing now.")
+        
+        new_content = []
+        print("Type '..exit' to finish editing.")
+        
+        while True:
+            line = input()
+            if line == "..exit":
+                break
+            new_content.append(line + "\n")
+
+        # Ask user if they want to save the new file
+        if new_content:
+            file.writelines(new_content)
+            print(f"New file '{filename}' saved.")
+
+# Function to rename an existing file
+def rename_file():
+    """Rename an existing file."""
+    old_filename = input("\nEnter the current filename to rename: ")
+
+    if not os.path.exists(old_filename):
+        print(f"File '{old_filename}' does not exist!")
+        return
+
+    new_filename = input("Enter the new filename: ")
+
+    # Rename the file
+    os.rename(old_filename, new_filename)
+    print(f"File '{old_filename}' renamed to '{new_filename}'.")
+
+# Function to list all files in the current directory
 def list_files():
     """List all files in the current directory."""
-    files = os.listdir(os.getcwd())
-    print("\\nFiles in current directory:")
-    for file in files:
-        if os.path.isfile(file):
-            print(f"- {file}")
+    print("\n--- List of Files ---")
+    files = os.listdir()
+    for f in files:
+        print(f)
+    print("-" * 20)
 
-def create_file(file_name):
-    """Create a new file."""
-    if os.path.exists(file_name):
-        print(f"Error: {file_name} already exists.")
-        return
-
-    with open(file_name, "w") as file:
-        print(f"{file_name} created successfully.")
-
-def open_file(file_name):
-    """Open and edit an existing file."""
-    try:
-        with open(file_name, "r") as file:
-            print(f"Opening {file_name}...\\n")
-            content = file.read()
-            print(content)
-            return content
-    except FileNotFoundError:
-        print(f"Error: {file_name} not found.")
-        return ""
-
-def save_file(file_name, content):
-    """Save content to the file."""
-    with open(file_name, "w") as file:
-        file.write(content)
-        print(f"Saved content to {file_name}")
-
-def rename_file(old_name, new_name):
-    """Rename a file."""
-    if os.path.exists(new_name):
-        print(f"Error: {new_name} already exists.")
-        return
-    os.rename(old_name, new_name)
-    print(f"Renamed {old_name} to {new_name}")
-
-def editor_menu():
-    """Display the editor menu."""
-    print("\\nEditor Menu:")
-    print("1. Edit a file")
-    print("2. Make a new file")
-    print("3. Rename a file")
-    print("4. List files")
-    print("5. Exit")
-
-def main():
-    """Main function to handle user input and editor logic."""
+# Main function to run the text editor
+def run_texteditor():
+    """Run the text editor and handle user input."""
     while True:
-        editor_menu()
-        choice = input("Select an option: ")
+        display_menu()
+
+        # Get user choice
+        choice = input("Enter your choice (1-5): ")
 
         if choice == "1":
-            file_name = input("Enter file name to edit: ")
-            content = open_file(file_name)
-            print("\\nStart editing (type '..exit' to quit and save):")
-
-            # Start editing the file
-            while True:
-                line = input()
-
-                if line.strip() == "..exit":
-                    print("\\nDo you want to save the changes? (y/n): ", end="")
-                    save_choice = input().strip().lower()
-                    if save_choice == "y":
-                        print("Enter file name to save as: ", end="")
-                        new_name = input().strip()
-                        save_file(new_name, content)
-                    break
-                else:
-                    content += line + "\\n"
-
+            edit_file()
         elif choice == "2":
-            file_name = input("Enter new file name to create: ")
-            create_file(file_name)
-
+            make_file()
         elif choice == "3":
-            old_name = input("Enter current file name to rename: ")
-            if os.path.exists(old_name):
-                new_name = input("Enter new file name: ")
-                rename_file(old_name, new_name)
-            else:
-                print(f"File {old_name} does not exist.")
-
+            rename_file()
         elif choice == "4":
             list_files()
-
         elif choice == "5":
-            print("Exiting editor.")
+            print("Exiting LightText editor.")
             break
-
         else:
-            print("Invalid option. Please choose again.")
+            print("Invalid choice, please try again.")
 
+# Entry point
 if __name__ == "__main__":
-    main()
-'''
-
-    # Write the editor script to the destination
-    with open(destination_path, 'w') as f:
-        f.write(editor_script)
-
-    print(f"{script_name} has been installed successfully!")
-
-if __name__ == "__main__":
-    install_lighttext()
+    run_texteditor()
