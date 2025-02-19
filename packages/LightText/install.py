@@ -5,7 +5,6 @@ import subprocess
 def install_dependencies():
     """Install dependencies for LightText (if needed)."""
     try:
-        # In this case, no external dependencies are required for LightText
         print("No external dependencies needed for LightText.")
     except subprocess.CalledProcessError as e:
         print(f"Error installing dependencies: {e}")
