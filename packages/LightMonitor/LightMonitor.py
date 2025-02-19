@@ -3,6 +3,7 @@ import shutil
 import os
 import time
 import keyboard  # to detect keyboard events
+from datetime import timedelta  # Import timedelta for uptime calculation
 
 def get_cpu_usage():
     """Returns a list of CPU usage percentages for each core."""
@@ -26,7 +27,7 @@ def get_uptime():
     boot_time = psutil.boot_time()
     now = time.time()
     uptime_seconds = int(now - boot_time)
-    return str(timedelta(seconds=uptime_seconds))
+    return str(timedelta(seconds=uptime_seconds))  # Calculate uptime using timedelta
 
 def get_top_processes():
     """Returns top 5 processes sorted by CPU usage."""
