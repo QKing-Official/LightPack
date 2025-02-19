@@ -80,7 +80,7 @@ def display_system_stats():
     for i, process in enumerate(top_processes):
         print(f"{i + 1}. PID: {process[0]} | Name: {process[1]} | CPU: {process[2]}% | Mem: {process[3]}%")
     
-    print("\nPress any key to exit...")  # Prompt to exit
+    print("\nPress 'Q' to exit...")  # Prompt to exit
 
 # Main function to run the LightMonitor
 def run_lightmonitor():
@@ -90,11 +90,10 @@ def run_lightmonitor():
             display_system_stats()  # Display system stats
             time.sleep(2)  # Wait for 2 seconds before refreshing the stats
 
-            # Wait for any keypress to exit the loop
-            event = keyboard.read_event()  # Blocks until a key is pressed
-            if event.event_type == keyboard.KEY_DOWN:  # Check if a key is pressed
+            # Wait for 'Q' key to exit the loop
+            if keyboard.is_pressed('q'):  # Check if 'Q' key is pressed
                 print("\nExiting LightMonitor...")
-                break  # Exit the loop when a key is pressed
+                break  # Exit the loop when 'Q' key is pressed
 
     except KeyboardInterrupt:
         # Handle Ctrl+C gracefully, so it doesn't crash the program
@@ -102,5 +101,5 @@ def run_lightmonitor():
 
 # Entry point of the script
 if __name__ == "__main__":
-    print("Welcome to LightMonitor! Press any key to quit.")
+    print("Welcome to LightMonitor! Press 'Q' to quit.")
     run_lightmonitor()  # Start monitoring the system
