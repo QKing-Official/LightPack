@@ -2,7 +2,7 @@ import psutil
 import shutil
 import os
 import time
-import keyboard  # To detect keypress events
+import msvcrt  # To capture any key press on Windows
 from datetime import timedelta  # For uptime formatting
 
 # Function to get the CPU usage percentage for each core
@@ -80,7 +80,7 @@ def display_system_stats():
     for i, process in enumerate(top_processes):
         print(f"{i + 1}. PID: {process[0]} | Name: {process[1]} | CPU: {process[2]}% | Mem: {process[3]}%")
     
-    print("\nPress 'Q' to exit...")  # Prompt to exit
+    print("\nPress any key to exit...")  # Prompt to exit
 
 # Main function to run the LightMonitor
 def run_lightmonitor():
@@ -90,16 +90,16 @@ def run_lightmonitor():
             display_system_stats()  # Display system stats
             time.sleep(2)  # Wait for 2 seconds before refreshing the stats
 
-            # Wait for 'Q' key to exit the loop
-            if keyboard.is_pressed('q'):  # Check if 'Q' key is pressed
-                print("\nExiting LightMonitor...")
-                break  # Exit the loop when 'Q' key is pressed
+            # Wait for any key to exit the loop
+            if msvcrt.kbhit():  # Check if any key is pressed
+                msvcrt.getch()  # Consume the pressed key
+                break  # Exit the loop when any key is pressed
 
     except KeyboardInterrupt:
         # Handle Ctrl+C gracefully, so it doesn't crash the program
-        print("\nCaught Ctrl+C. Exiting LightMonitor.")
+        pass
 
 # Entry point of the script
 if __name__ == "__main__":
-    print("Welcome to LightMonitor! Press 'Q' to quit.")
+    print("Welcome to LightMonitor! Press any key to quit.")
     run_lightmonitor()  # Start monitoring the system
