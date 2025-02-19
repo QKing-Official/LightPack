@@ -19,7 +19,7 @@ def get_system_info():
 
     # CPU
     cpu = cpuinfo.get_cpu_info()
-    system_info['cpu'] = cpu['cpuinfo'][0]
+    system_info['cpu'] = cpu.get('processor', 'Unknown CPU')  # Safely access CPU info
     system_info['cpu_cores'] = psutil.cpu_count(logical=False)
 
     # RAM
