@@ -41,13 +41,30 @@ def get_system_info():
 
 def print_system_info(info):
     """Print system information like neofetch"""
-    print(f"           \\{info['hostname']}/")
-    print(f"      OS: {info['os']} {info['os_version']}")
-    print(f"   Kernel: {info['cpu']}")
-    print(f"    RAM: {info['ram']} GB")
-    print(f" Disk: {info['disk']} GB used")
-    print(f"  Python: {info['python_version']}")
-    print(f" Uptime: {info['uptime']}")
+    
+    # Improved ASCII art icon
+    ascii_icon = r"""
+      _______________________
+     |  _________________    |
+     | |                 |   |
+     | |    LIGHTFETCH   |   |
+     | |                 |   |
+     | |    _________    |   |
+     | |   |         |   |   |
+     | |   |  [==]   |   |   |
+     | |   |_________|   |   |
+     | |_________________|   |
+     |_______________________|
+    """
+    
+    print(ascii_icon)
+    print(f"            {info['hostname']}")
+    print(f"        OS: {info['os']} {info['os_version']}")
+    print(f"     Kernel: {info['cpu']}")
+    print(f"      RAM: {info['ram']} GB")
+    print(f"    Disk: {info['disk']} GB used")
+    print(f"   Python: {info['python_version']}")
+    print(f"   Uptime: {info['uptime']}")
     print(f" CPU Cores: {info['cpu_cores']}")
     print("\n")
 
