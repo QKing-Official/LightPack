@@ -259,7 +259,7 @@ Add the repository to the community packages inside Lightpack
 ```bash
 lightpack-shell> addrepo REPO_URL_FROM_REPO.JSON
 ```
-Replace 'REPO_URL_FROM_REPO.JSON' with the url from the repo.json.
+Replace 'REPO_URL_FROM_REPO.JSON' with the url of the repository.
 
 Install packages from the repository:
 ```bash
