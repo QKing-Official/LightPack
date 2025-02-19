@@ -123,7 +123,7 @@ Each package should have:
 
 A main script: .py
 
-(Optional) An installer script: install.py
+An installer script: install.py
 
 Example structure:
 
@@ -159,6 +159,8 @@ if __name__ == "__main__":
 main_functionality()
 
 ```
+
+
 
 
 
@@ -255,13 +257,13 @@ Now all users can install your packages with the following guide:
 
 Add the repository to the community packages inside Lightpack
 ```bash
-addrepo REPO_URL_FROM_REPO.JSON
+lightpack-shell> addrepo REPO_URL_FROM_REPO.JSON
 ```
 Replace 'REPO_URL_FROM_REPO.JSON' with the url from the repo.json.
 
 Install packages from the repository:
 ```bash
-install PACKAGENAME:REPONAME
+lightpack-shell> install PACKAGENAME:REPONAME
 ```
 
 Replace 'PACKAGENAME' with the name of the package you want to install and  'REPONAME' with the name of the repo (from the repo.json).
@@ -272,14 +274,14 @@ You can uninstall packages without the need of the :REPONAME section.
 
 If you want to see what repositories you have added. Run the following command inside of Lightpack:
 ```bash
-listrepos
+lightpack-shell> listrepos
 ```
 It will show all the names of the repositories you added.
 
 
 If you want to remove a repository, run the following command:
 ```bash
-removerepo REPONAME
+lightpack-shell> removerepo REPONAME
 ```
 
 replace 'REPONAME' witht the name of the repo (what you saw in the listrepo command).
