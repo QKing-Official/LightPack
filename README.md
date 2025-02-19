@@ -75,6 +75,21 @@ Example:
 lightpack-shell> run hello-world
 ```
 
+Clear the screen:
+```bash
+lightpack-shell> clear
+```
+
+Ask for help:
+```bash
+lightpack-shell> help
+```
+
+Update a package:
+```bash
+lightpack-shell> update <packagename>
+```
+
 Exit the Shell
 
 To exit LightPack, use:
@@ -82,6 +97,9 @@ To exit LightPack, use:
 ```bash
 lightpack-shell> exit
 ```
+
+For community packages installation guide scroll down.
+
 
 ## Some available Packages (there are way more)
 
@@ -92,6 +110,8 @@ hello-world – Prints "Hello, World!"
 network-info - Gives information about your network.
 
 sys-info - Gives information about your system.
+
+These are all official, if you want to make you own or install community packages. Scroll down.
 
 ## Creating Your Own Packages
 
@@ -196,7 +216,74 @@ install()
 
 ```
 
-Users can now install your package using install. When community packages are added i will update you all with how to use it!
+Your package is done! (You can install it when you clone whole repo)
+More on publication on packages in the next part
+
+## How to make your own package repository (Publication)
+
+To make a package repository you need to make a repository on github first.
+Structure the repository like this:
+```cpp
+lightpackages/            
+│── repo.json                      
+│
+└── packages/                       
+    ├── example/                    
+    │   ├── install.py              
+    │   ├── example.py             
+    │
+    ├── another_package/             
+    │   ├── install.py
+    │   ├── another_package.py
+```
+
+The repo.json needs to contain basic data of your repository
+Structure it like this:
+```json
+{
+    "name": "Example",
+    "url": "https://raw.githubusercontent.com/USER/REPOSITORYNAME/main/packages"
+}
+```
+Replace 'Example' with the name you want your repo to be showed as inside Lightpack.
+Replace 'USER' with your Github username and 'REPOSITORYNAME' with the name of your repository.
+The packages or put in the packages directory and are structured as explained before.
+
+## Install community packages/repositories
+
+Now all users can install your packages with the following guide:
+
+Add the repository to the community packages inside Lightpack
+```bash
+addrepo REPO_URL_FROM_REPO.JSON
+```
+Replace 'REPO_URL_FROM_REPO.JSON' with the url from the repo.json.
+
+Install packages from the repository:
+```bash
+install PACKAGENAME:REPONAME
+```
+
+Replace 'PACKAGENAME' with the name of the package you want to install and  'REPONAME' with the name of the repo (from the repo.json).
+
+You can uninstall packages without the need of the :REPONAME section.
+
+## How to see what repositories i have added?
+
+If you want to see what repositories you have added. Run the following command inside of Lightpack:
+```bash
+listrepos
+```
+It will show all the names of the repositories you added.
+
+
+If you want to remove a repository, run the following command:
+```bash
+removerepo REPONAME
+```
+
+replace 'REPONAME' witht the name of the repo (what you saw in the listrepo command).
+
 
 Contributing
 Feel free to contribute new packages or improve existing ones. Fork the repo, make your changes, and submit a pull request.
