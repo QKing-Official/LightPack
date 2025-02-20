@@ -8,7 +8,7 @@ import shutil
 # Configuration
 INSTALL_DIR = os.getcwd()
 REPO_FILE = os.path.join(INSTALL_DIR, "community_repos.json")
-VERSION = "1.4.0"
+VERSION = "1.5.0"
 ARCHIVE_GITHUB_URL = "https://raw.githubusercontent.com/QKing-Official/Lightpack/main/archive"
 # Ensure the repository file exists
 if not os.path.exists(REPO_FILE):
