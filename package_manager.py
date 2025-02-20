@@ -3,12 +3,13 @@ import sys
 import os
 import urllib.request
 import json
+import shutil
 
 # Configuration
 INSTALL_DIR = os.getcwd()
 REPO_FILE = os.path.join(INSTALL_DIR, "community_repos.json")
 VERSION = "1.4.0"
-
+ARCHIVE_GITHUB_URL = "https://raw.githubusercontent.com/QKing-Official/Lightpack/main/archive
 # Ensure the repository file exists
 if not os.path.exists(REPO_FILE):
     with open(REPO_FILE, "w") as f:
@@ -37,8 +38,6 @@ def save_repos(repos):
 
 def add_repo(url):
     """Add a new community repository and fetch repo.json."""
-
-    # Convert GitHub URL to raw content URL if needed
     if "github.com" in url and not url.endswith(".json"):
         url = url.rstrip("/")  # Remove trailing slash
         url = url.replace("github.com", "raw.githubusercontent.com") + "/main/repo.json"
@@ -90,24 +89,6 @@ def list_repos():
     else:
         print("No community repositories added.")
 
-def clone_main_file(package_name, repo_url):
-    """Clone the main Python file for the package."""
-    print(f"Cloning {package_name}.py from {repo_url}...")
-
-    package_path = os.path.join(INSTALL_DIR, f"{package_name}.py")
-    url = f"{repo_url}/{package_name}/{package_name}.py"
-
-    return download_file(url, package_path)
-
-def clone_installer(package_name, repo_url):
-    """Clone the install.py script for the package."""
-    print(f"Cloning {package_name}/install.py from {repo_url}...")
-
-    installer_path = os.path.join(INSTALL_DIR, f"{package_name}_install.py")
-    url = f"{repo_url}/{package_name}/install.py"
-
-    return download_file(url, installer_path)
-
 def install_package(package_name, repo_name=None):
     """Install a package from a LightPack or community repository."""
     repos = load_repos()
@@ -121,12 +102,18 @@ def install_package(package_name, repo_name=None):
     else:
         repo_url = "https://raw.githubusercontent.com/QKing-Official/LightPack/main/packages"
 
-    if not clone_main_file(package_name, repo_url):
+    # Clone main file and installer
+    package_path = os.path.join(INSTALL_DIR, f"{package_name}.py")
+    url = f"{repo_url}/{package_name}/{package_name}.py"
+    if not download_file(url, package_path):
         return
 
-    if not clone_installer(package_name, repo_url):
+    installer_path = os.path.join(INSTALL_DIR, f"{package_name}_install.py")
+    url = f"{repo_url}/{package_name}/install.py"
+    if not download_file(url, installer_path):
         return
 
+    # Run the installer
     try:
         print(f"Running installer for {package_name}...")
         subprocess.run([sys.executable, f"{package_name}_install.py"], check=True)
@@ -188,17 +175,61 @@ def display_help():
     print("  list                       - List installed packages")
     print("  uninstall <package>        - Remove an installed package")
     print("  update <package>           - Update a package")
+    print("  update-all                 - Update all installed packages")
+    print("  update-lightpack           - Update LightPack to the latest version")
     print("  addrepo <url>              - Add a community repository")
     print("  removerepo <repo>          - Remove a community repository")
     print("  listrepos                  - List all added repositories")
     print("  clear                      - Clear the terminal")
     print("  help                       - Show this help message")
     print("  exit                       - Exit the package manager")
+    print("  downgrade <version>        - Downgrade LightPack to a previous version")
+
+def downgrade_lightpack(version):
+    """Downgrade to an older version from the GitHub archive."""
+    file_url = f"{ARCHIVE_GITHUB_URL}/{version}/package_manager.py"
+    package_manager_path = os.path.join(INSTALL_DIR, "package_manager.py")
+
+    if download_file(file_url, package_manager_path):
+        print(f"Successfully downgraded to version {version}!")
+    else:
+        print(f"Version {version} not found in the archive.")
+        
+def list_version():
+    """List the current version of LightPack."""
+    print(f"Current LightPack version: {VERSION}")        
+
+def update_all_packages():
+    """Update all installed packages except package_manager.py."""
+    print("Updating all installed packages...")
+    try:
+        for file in os.listdir(INSTALL_DIR):
+            # Skip updating the package_manager.py itself
+            if file.endswith(".py") and not file.endswith("_install.py") and file != "package_manager.py":
+                package_name = file[:-3]
+                update_package(package_name)
+    except Exception as e:
+        print(f"Error updating all packages: {e}")
+
+def update_lightpack():
+    """Update LightPack to the latest version."""
+    print("Upgrading LightPack...")
+    try:
+        latest_version_url = "https://raw.githubusercontent.com/QKing-Official/LightPack/main/package_manager.py"  # Replace with actual URL to the latest version
+        package_manager_path = os.path.join(INSTALL_DIR, "package_manager.py")
+        if download_file(latest_version_url, package_manager_path):
+            print("LightPack upgraded successfully!")
+            print("Restart shell/LightPack to use upgraded version!")
+        else:
+            print("Failed to update LightPack.")
+    except Exception as e:
+        print(f"Error updating LightPack: {e}")
 
 def interactive_shell():
     """Start an interactive shell."""
     while True:
-        command = input("lightpack-shell> ").strip()
+        current_dir = os.getcwd()  # Get the current directory
+        command = input(f"lightpackshell@{current_dir}> ").strip()
 
         if command == "exit":
             break
@@ -221,12 +252,19 @@ def interactive_shell():
             uninstall_package(command.split(" ", 1)[1])
         elif command.startswith("update "):
             update_package(command.split(" ", 1)[1])
+        elif command == "update-all":
+            update_all_packages()
+        elif command == "upgrade":
+            update_lightpack()
+        elif command.startswith("downgrade "):
+            version = command.split(" ", 1)[1]
+            downgrade_lightpack(version)
+        elif command == "listrepos":
+            list_repos()
         elif command.startswith("addrepo "):
             add_repo(command.split(" ", 1)[1])
         elif command.startswith("removerepo "):
             remove_repo(command.split(" ", 1)[1])
-        elif command == "listrepos":
-            list_repos()
         else:
             print("Unknown command. Type 'help' for a list of commands.")
 
