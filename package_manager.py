@@ -235,6 +235,8 @@ def interactive_shell():
             break
         elif command == "clear":
             clear_console()
+        elif command == "list_version":
+            clear_console()
         elif command == "list":
             list_packages()
         elif command == "help":
