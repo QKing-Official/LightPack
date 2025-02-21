@@ -40,7 +40,7 @@ cd LightPack
 Start the interactive shell by running:
 
 ```bash
-python packag_manager.py
+python package_manager.py
 ```
 
 ## Usage
