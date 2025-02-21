@@ -3,6 +3,7 @@ name: "CodeQL Advanced"
 on:
   schedule:
     - cron: '38 22 * * 6'  # Run every Saturday at 22:38
+  workflow_dispatch:  # Manually trigger from the GitHub UI
 
 jobs:
   analyze:
